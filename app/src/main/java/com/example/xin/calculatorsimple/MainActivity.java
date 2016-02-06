@@ -1,5 +1,7 @@
 package com.example.xin.calculatorsimple;
 
+/* Author Xin Gu, Feb 4th, 2016 */
+/* Issue 00003 by Xin Gu, Feb 6, 2016 */
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -52,18 +54,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //* toggle the + and - before a number */
+     /* Issue 00003*/
     public void onSignText(View view) {
     }
 
+    //* Clear all input *//
     public void onClearText(View view) {
     }
 
+    //* Input percent *//
     public void onPercentText(View view) {
     }
 
-    public void onDevideText(View view) {
+    //* Input divide *//
+    public void onDivideText(View view) {
     }
 
+    //* Display input text *//
     public void onText(View view) {
     }
 }
