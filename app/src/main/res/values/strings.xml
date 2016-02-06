@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">CalculatorSimple</string>
+    <string name="action_settings">Settings</string>
+    <string name="clear_text">C</string>
+    <string name="devide">/</string>
+    <string name="percent_text">%</string>
+    <string name="sign_text">+/-</string>
+    <string name="multiply_text">X</string>
+    <string name="plus_text">+</string>
+    <string name="substract_text">-</string>
+    <string name="equal_text">=</string>
+    <string name="stat_text">Stat</string>
+    <string name="point_text">.</string>
+    <string name="zero_text">0</string>
+    <string name="one_text">1</string>
+    <string name="two_text">2</string>
+    <string name="three_text">3</string>
+    <string name="four_text">4</string>
+    <string name="five_text">5</string>
+    <string name="six_text">6</string>
+    <string name="seven_text">7</string>
+    <string name="eight_text">8</string>
+    <string name="nine_text">9</string>
+
+
+</resources>
