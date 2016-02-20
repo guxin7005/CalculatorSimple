@@ -4,32 +4,31 @@ package com.example.xin.calculatorsimple;
 /* Issue 00003 by Xin Gu, Feb 6, 2016 */
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    String strInput;
+    TextView expressionTextView;
+    TextView resultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        strInput = new String();
+        expressionTextView = (TextView) findViewById(R.id.expressionTextView);
+        expressionTextView.setGravity(Gravity.CENTER_VERTICAL);
+        expressionTextView.setHint("The input expression will show here.");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        resultTextView = (TextView) findViewById(R.id.resultTextView);
+        resultTextView.setGravity(Gravity.CENTER_VERTICAL);
+        resultTextView.setHint("The result will show here.");
     }
 
     @Override
@@ -54,24 +53,111 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //* toggle the + and - before a number */
-     /* Issue 00003*/
-    public void onSignText(View view) {
+
+    public void updateExpression() {
+        expressionTextView.setText(strInput);
     }
 
-    //* Clear all input *//
-    public void onClearText(View view) {
+    //* remove the last character of the input */
+    public void btnClearOnClick(View view) {
+        if (strInput.length() > 0)
+            strInput = strInput.substring(0, strInput.length() - 1);
+        updateExpression();
     }
 
-    //* Input percent *//
-    public void onPercentText(View view) {
+    public void btn0OnClick(View v) {
+        strInput += "0";
+        updateExpression();
     }
 
-    //* Input divide *//
-    public void onDivideText(View view) {
+    public void btn1OnClick(View v) {
+        strInput += "1";
+        updateExpression();
     }
 
-    //* Display input text *//
-    public void onText(View view) {
+    public void btn2OnClick(View v) {
+        strInput += "2";
+        updateExpression();
+    }
+
+    public void btn3OnClick(View v) {
+        strInput += "3";
+        updateExpression();
+    }
+
+    public void btn4OnClick(View v) {
+        strInput += "4";
+        updateExpression();
+    }
+
+    public void btn5OnClick(View v) {
+        strInput += "5";
+        updateExpression();
+    }
+
+    public void btn6OnClick(View v) {
+        strInput += "6";
+        updateExpression();
+    }
+
+    public void btn7OnClick(View v) {
+        strInput += "7";
+        updateExpression();
+    }
+
+    public void btn8OnClick(View v) {
+        strInput += "8";
+        updateExpression();
+    }
+
+    public void btn9OnClick(View v) {
+        strInput+="9";
+        updateExpression();
+    }
+
+    public void btnPlusOnClick(View v) {
+        strInput+="+";
+        updateExpression();
+    }
+
+    public void btnSubtractOnClick(View v){
+        strInput+="-";
+        updateExpression();
+    }
+
+    public void btnMultiplyOnClick(View v) {
+        strInput+="*";
+        updateExpression();
+    }
+
+    public void btnDivideOnClick(View v){
+        strInput+="/";
+        updateExpression();
+    }
+
+    public void btnModOnClick(View v){
+        strInput+="%";
+        updateExpression();
+    }
+
+    public void btnPointOnClick(View v){
+        strInput+=".";
+        updateExpression();
+    }
+
+    public void btnExpoOnClick(View v){
+        strInput+="^";
+        updateExpression();
+    }
+
+    public void btnCalcOnClick(View v){
+        String result = calculate(strInput);
+        resultTextView.setText(result);
+    }
+
+
+
+    public String calculate(String strInput){
+        return "";
     }
 }
