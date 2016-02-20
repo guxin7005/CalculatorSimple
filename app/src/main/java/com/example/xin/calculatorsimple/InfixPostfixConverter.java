@@ -32,9 +32,23 @@ public class InfixPostfixConverter {
 
     private final int level1 = 0;//+-: level 0
     private final int level2 = 1;//*/: level 1
-    private final int level3 = 3;//() level 3
+    private final int level3 = 3;//() level 3    /Maybe we do not define a level 3.
 
     private int getOperatorLevel(String operator){
+        char oper = operator.charAt(0);
+
+        switch(oper){
+            case '+':
+            case '-':
+                return level1;
+            case '*':
+            case '/':
+            case '%':
+                return level2;
+            case '^':
+                return level3;
+        }
+
         if("+".equals(operator)||"-".equals(operator)){
             return level1;
         }
@@ -44,6 +58,7 @@ public class InfixPostfixConverter {
         if("(".equals(operator)||")".equals(operator)){
             return level3;
         }
+
         return -1;
     }
 
