@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="clear_text">C</string>
     <string name="devide_text">/</string>
-    <string name="mod_text">%</string>
+    <string name="percent_text">%</string>
     <string name="toggle_sign_text">+/-</string>
     <string name="multiply_text">*</string>
     <string name="plus_text">+</string>

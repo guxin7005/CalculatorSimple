@@ -20,7 +20,6 @@ public class Operator {
                 break;
             case '*':
             case '/':
-            case '%':
                 level = 1;
                 break;
             case '^':
@@ -68,6 +67,18 @@ public class Operator {
             default:
                 /* level == -1 means the Operator is invalid */
                 return -1;
+        }
+    }
+
+    public static boolean isOperator(char c){
+        switch(c){
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                return true;
+            default:
+                return false;
         }
     }
 }

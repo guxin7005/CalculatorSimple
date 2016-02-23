@@ -11,24 +11,41 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     String strInput;
     TextView expressionTextView;
     TextView resultTextView;
+    String currentItem;
+    ArrayList<String> inputItems;
+    boolean isItemUpdated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        strInput = new String();
+        strInput = "";
+        currentItem = "0";
+        isItemUpdated = false;
+
+        inputItems=new ArrayList<String>();
+
+
         expressionTextView = (TextView) findViewById(R.id.expressionTextView);
         expressionTextView.setGravity(Gravity.CENTER_VERTICAL);
         expressionTextView.setHint("The input expression will show here.");
 
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         resultTextView.setGravity(Gravity.CENTER_VERTICAL);
-        resultTextView.setHint("The result will show here.");
+        resultTextView.setText(currentItem);
+        isItemUpdated = false;
+
+
+        updateItem();
     }
 
     @Override
@@ -58,106 +75,401 @@ public class MainActivity extends AppCompatActivity {
         expressionTextView.setText(strInput);
     }
 
+    public void updateItem(){
+        resultTextView.setText(currentItem);
+        isItemUpdated = true;
+    }
+
     //* remove the last character of the input */
     public void btnClearOnClick(View view) {
-        if (strInput.length() > 0)
-            strInput = strInput.substring(0, strInput.length() - 1);
-        updateExpression();
+        if(isItemUpdated) {
+            currentItem = currentItem.substring(0, currentItem.length() - 1);
+            if(currentItem.isEmpty()) {
+                currentItem = "0";
+                isItemUpdated = false;
+            }
+            resultTextView.setText(currentItem);
+        }
+
+        else if(strInput.length()>0){
+            char tail = strInput.charAt(strInput.length() - 1);
+
+            if(Operator.isOperator(tail)){
+                strInput = strInput.substring(0, strInput.length() - 1);
+            }
+            else if(tail==')'){
+                int leftParenthesisIndex = strInput.lastIndexOf('(');
+                strInput = strInput.substring(0, leftParenthesisIndex);
+            }
+            else{
+                Pattern pattern = Pattern.compile(".*(\\+|-|\\*|/|\\^)");
+                Matcher matcher = pattern.matcher(strInput);
+                if(matcher.find()){
+                    strInput = strInput.substring(0, matcher.end());
+                }else{
+                    strInput="";
+                }
+            }
+            removeFromItems();
+            updateExpression();
+        }
+    }
+
+    public void removeFromItems(){
+        if(inputItems.isEmpty()) return;
+        inputItems.remove(inputItems.size() - 1);
+    }
+
+    public void processCurrentItem(){
+
+    }
+
+    public void btnToggleSignOnClick(View v){
+        if(currentItem.charAt(0)!='-'){
+            currentItem='-'+currentItem;
+        }else{
+            currentItem=currentItem.substring(1, currentItem.length());
+        }
+
+        updateItem();
+    }
+
+    public void btnPointOnClick(View v){
+        if(!currentItem.contains(".")) {
+            currentItem += ".";
+            updateItem();
+        }
     }
 
     public void btn0OnClick(View v) {
-        strInput += "0";
-        updateExpression();
+        isItemUpdated = true;
+
+        if(currentItem.equals("0") || currentItem.equals("-0")) return;
+
+        currentItem+="0";
+        updateItem();
     }
 
     public void btn1OnClick(View v) {
-        strInput += "1";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="1";
+        else if(currentItem.equals("-0"))
+            currentItem="-1";
+        else
+            currentItem+="1";
+        updateItem();
     }
 
     public void btn2OnClick(View v) {
-        strInput += "2";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="2";
+        else if(currentItem.equals("-0"))
+            currentItem="-2";
+        else
+            currentItem += "2";
+        updateItem();
     }
 
     public void btn3OnClick(View v) {
-        strInput += "3";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="3";
+        else if(currentItem.equals("-0"))
+            currentItem="-3";
+        else
+            currentItem += "3";
+        updateItem();
     }
 
     public void btn4OnClick(View v) {
-        strInput += "4";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="4";
+        else if(currentItem.equals("-0"))
+            currentItem="-4";
+        else
+            currentItem += "4";
+        updateItem();
     }
 
     public void btn5OnClick(View v) {
-        strInput += "5";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="5";
+        else if(currentItem.equals("-0"))
+            currentItem="-5";
+        else
+            currentItem += "5";
+        updateItem();
     }
 
     public void btn6OnClick(View v) {
-        strInput += "6";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="6";
+        else if(currentItem.equals("-0"))
+            currentItem="-6";
+        else
+            currentItem += "6";
+        updateItem();
     }
 
     public void btn7OnClick(View v) {
-        strInput += "7";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="7";
+        else if(currentItem.equals("-0"))
+            currentItem="-7";
+        else
+            currentItem += "7";
+        updateItem();
     }
 
     public void btn8OnClick(View v) {
-        strInput += "8";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="8";
+        else if(currentItem.equals("-0"))
+            currentItem="-8";
+        else
+            currentItem += "8";
+        updateItem();
     }
 
     public void btn9OnClick(View v) {
-        strInput+="9";
-        updateExpression();
+        if(currentItem.equals("0"))
+            currentItem="9";
+        else if(currentItem.equals("-0"))
+            currentItem="-9";
+        else
+            currentItem += "9";
+        updateItem();
     }
 
     public void btnPlusOnClick(View v) {
-        strInput+="+";
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="+";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "+";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+            resultTextView.setText(currentItem);
+        }
+
+        inputItems.add("+");
         updateExpression();
     }
 
     public void btnSubtractOnClick(View v){
-        strInput+="-";
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="-";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "-";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+            resultTextView.setText(currentItem);
+        }
+
+        inputItems.add("-");
         updateExpression();
     }
 
     public void btnMultiplyOnClick(View v) {
-        strInput+="*";
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="*";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "*";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+            resultTextView.setText(currentItem);
+        }
+
+        inputItems.add("*");
         updateExpression();
     }
 
     public void btnDivideOnClick(View v){
-        strInput+="/";
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="/";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "/";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+            resultTextView.setText(currentItem);
+        }
+
+        inputItems.add("/");
         updateExpression();
     }
 
-    public void btnModOnClick(View v){
-        strInput+="%";
-        updateExpression();
-    }
+    public void btnPercentOnClick(View v){
+        if(isItemUpdated){
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
 
-    public void btnPointOnClick(View v){
-        strInput+=".";
-        updateExpression();
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            double currentValue = Double.parseDouble(currentItem)/100.0;
+            currentItem = Double.toString(currentValue);
+
+            updateItem();
+        }
     }
 
     public void btnExpoOnClick(View v){
-        strInput+="^";
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="^";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "^";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+            resultTextView.setText(currentItem);
+        }
+
+        inputItems.add("^");
         updateExpression();
     }
 
     public void btnCalcOnClick(View v){
-        String result = calculate(strInput);
+        if(!isItemUpdated){
+            if(strInput.isEmpty()) return;
+            strInput = strInput.substring(0, strInput.length() - 1);
+            removeFromItems();
+            strInput+="=";
+        }
+        else {
+            if(currentItem.equals("-0")) {
+                currentItem = "0";
+            }
+
+            if(currentItem.endsWith(".")){
+                currentItem += "0";
+            }
+
+            inputItems.add(currentItem);
+
+            /*The following statements is for expression */
+            if (currentItem.charAt(0) == '-')
+                currentItem = "(" + currentItem + ")";
+
+            currentItem += "=";
+            strInput += currentItem;
+
+            /* reset the item for next input or result */
+            currentItem = "0";
+            isItemUpdated = false;
+        }
+
+        updateExpression();
+
+        String result = calculate(inputItems);
         resultTextView.setText(result);
     }
 
 
-
-    public String calculate(String strInput){
-        return "";
+    public String calculate(ArrayList<String> strInput){
+        return "aaa";
     }
 }
