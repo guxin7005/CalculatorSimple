@@ -3,7 +3,7 @@ package com.example.xin.calculatorsimple;
 /**
  * Created by xiaoqian-niu on 2016-02-15.
  */
-public class Operator {
+public class Operator extends Elements {
     private int level;
     private char symbol;
     private boolean left_assoiative;
@@ -69,5 +69,10 @@ public class Operator {
                 /* level == -1 means the Operator is invalid */
                 return -1;
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(symbol);
     }
 }

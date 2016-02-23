@@ -1,4 +1,4 @@
-package ca.google.calculator;
+package com.example.xin.calculatorsimple;
 import java.util.*;
 
 /**
