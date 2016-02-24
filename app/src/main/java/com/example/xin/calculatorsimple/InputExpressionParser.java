@@ -9,7 +9,7 @@ public class InputExpressionParser {
 
 
 
-    public List<Elements> parse(String rawExpression){
+    public List<Element> parse(String rawExpression){
         return classify(tokenizer(rawExpression));
     }
 
@@ -31,14 +31,14 @@ public class InputExpressionParser {
         return splitExp;
     }
 
-    private List<Elements> classify(List<String> splitExp){
+    private List<Element> classify(List<String> splitExp){
         /**
          * Classify the string list
          * @param String
          * @return ArrayList<String>
          */
 
-        List<Elements> infixExpression = new ArrayList<Elements>();
+        List<Element> infixExpression = new ArrayList<Element>();
 
         for(String I:splitExp){
             if(isNumber(I)){

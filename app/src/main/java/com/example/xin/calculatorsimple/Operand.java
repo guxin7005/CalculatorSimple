@@ -3,7 +3,7 @@ package com.example.xin.calculatorsimple;
 /**
  * Created by xiaoqian-niu on 2016-02-16.
  */
-public abstract class Operand extends Elements {
+public abstract class Operand extends Element {
     private int dimensions;
     private String symbol;
 

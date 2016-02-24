@@ -10,29 +10,25 @@ import java.util.*;
  */
 public class InfixPostfixConverter {
 
-    private Stack<Elements> opStack = new Stack<Elements>();
-    private List<Elements> infixExpression = new ArrayList<Elements>();
-    private List<Elements> postfixExpression = new ArrayList<Elements>();
+    private Stack<Element> opStack = new Stack<Element>();
+    private List<Element> infixExpression = new ArrayList<Element>();
+    private List<Element> postfixExpression = new ArrayList<Element>();
 
-    public InfixPostfixConverter(List<Elements> inputExpression){
+    public InfixPostfixConverter(List<Element> inputExpression){
         setInfixExpression(inputExpression);
     }
 
     public InfixPostfixConverter(){
     }
 
-    public void setInfixExpression(List<Elements> inputExpression){
+    public void setInfixExpression(List<Element> inputExpression){
             infixExpression = inputExpression;
     }
 
-    public List<Elements> getPostfixExpression(){
+    public List<Element> getPostfixExpression(){
         infixToPostfix();
         return postfixExpression;
     }
-
-    private final int level1 = 0;//+-: level 0
-    private final int level2 = 1;//*/: level 1
-    private final int level3 = 3;//() level 3    /Maybe we do not define a level 3.
 
     private int getOperatorLevel(String operator){
         char oper = operator.charAt(0);
@@ -62,13 +58,13 @@ public class InfixPostfixConverter {
         return -1;
     }
 
-    private List<Elements> infixToPostfix(){
+    private List<Element> infixToPostfix(){
         return infixToPostfix(infixExpression);
     }
 
-    private List<Elements> infixToPostfix(List<Elements> infixExpr){
+    private List<Element> infixToPostfix(List<Element> infixExpr){
 
-        for(String A : infixExpr){
+        for(Element A : infixExpr){
             if(isNumber(A))
                 postfixExpression.add(A);
             else if(isOperator(A))
