@@ -68,6 +68,7 @@ public class InfixPostfixConverter {
 
         for(Element A : infixExpr){
             System.out.println("opStack " + opStack);
+            System.out.println("postfixExpression " + postfixExpression);
             if(A instanceof Operand){
                 System.out.println("meet Operand " + A);
                 postfixExpression.add(A);
@@ -101,6 +102,9 @@ public class InfixPostfixConverter {
 
     private void opStack(Operator operator){
         //Push operator into the stack if it is empty
+
+        System.out.println("input op " + operator);
+
         if(opStack.empty()){
             opStack.push(operator);
             return;
@@ -128,9 +132,15 @@ public class InfixPostfixConverter {
             return;
         }
 
+        System.out.println("comparePriority " + operator);
         if(comparePriority(operator, opStack.peek())){
             opStack.push(operator);
             return;
+        }
+
+        if(!comparePriority(operator, opStack.peek())){
+            postfixExpression.add(opStack.pop());
+            opStack(operator);
         }
 
         System.out.println("opStack " + opStack);
