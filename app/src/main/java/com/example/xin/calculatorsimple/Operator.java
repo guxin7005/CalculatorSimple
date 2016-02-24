@@ -7,12 +7,15 @@ public class Operator extends Element {
     private int level;
     private char symbol;
     private boolean left_assoiative;
-    private boolean isOperator;
+
 
     public Operator(char c){
         symbol = c;
-        isOperator = true;
+
+        super.isOperator = true;
+
         left_assoiative = true;
+
         switch(c){
             case '+':
             case '-':
@@ -20,6 +23,7 @@ public class Operator extends Element {
                 break;
             case '*':
             case '/':
+            case '%':
                 level = 1;
                 break;
             case '^':
@@ -32,6 +36,30 @@ public class Operator extends Element {
     }
 
     public Operator(String str){
+        symbol = str.charAt(0);
+        char c = symbol;
+
+        super.isOperator = true;
+
+        left_assoiative = true;
+
+        switch(c){
+            case '+':
+            case '-':
+                level = 0;
+                break;
+            case '*':
+            case '/':
+            case '%':
+                level = 1;
+                break;
+            case '^':
+                level = 2;
+                left_assoiative = false;
+                break;
+            default:
+                isOperator = false;
+        }
 
     }
 

@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class InfixPostfixConverter {
 
-    private Stack<Element> opStack = new Stack<Element>();
+    private Stack<Operator> opStack = new Stack<Operator>();
     private List<Element> infixExpression = new ArrayList<Element>();
     private List<Element> postfixExpression = new ArrayList<Element>();
 
@@ -30,6 +30,7 @@ public class InfixPostfixConverter {
         return postfixExpression;
     }
 
+    /*
     private int getOperatorLevel(String operator){
         char oper = operator.charAt(0);
 
@@ -57,6 +58,7 @@ public class InfixPostfixConverter {
 
         return -1;
     }
+    */
 
     private List<Element> infixToPostfix(){
         return infixToPostfix(infixExpression);
@@ -65,17 +67,34 @@ public class InfixPostfixConverter {
     private List<Element> infixToPostfix(List<Element> infixExpr){
 
         for(Element A : infixExpr){
-            if(A instanceof Number)
+            System.out.println("opStack " + opStack);
+            if(A instanceof Operand){
+                System.out.println("meet Operand " + A);
                 postfixExpression.add(A);
-            else if(A instanceof Operator)
-                opStack((Operator)A);
+            }
+            else if(A instanceof Operator) {
+                System.out.println("meet Operator " + A);
+                opStack((Operator) A);
+            }
             else
                 System.out.println("undefined operator!");
         }
 
+        System.out.println("finish! opStack " + opStack);
+        System.out.println(!opStack.empty());
+
+        System.out.println(postfixExpression);
+
         while(!opStack.empty()){
-            postfixExpression.add(opStack.pop());
+            System.out.println("opStack " + opStack);
+            Operator tmp = opStack.pop();
+            System.out.println(tmp);
+            postfixExpression.add(tmp);
         }
+
+        System.out.println(postfixExpression);
+        System.out.println(!opStack.empty());
+
 
         return postfixExpression;
     }
@@ -88,22 +107,23 @@ public class InfixPostfixConverter {
         }
 
         //Push operator into the stack if it is a left bracket
-        if("(".equals(operator.toString())){
+        if("(".charAt(0) == operator.getSymbol()){
             opStack.push(operator);
             return;
         }
 
         //Pop all elements in the stack to the output if meet the right bracket
-        if(")".equals(operator.toString())){
-            String tmp = "";
-            while(!"(".equals(tmp=opStack.pop())){
+        if(")".charAt(0) == operator.getSymbol()){
+            Operator tmp;
+            while(!("(".charAt(0) == ( (tmp=((Operator)opStack.pop())) .getSymbol() )) )
+            {
                 postfixExpression.add(tmp);
             }
             return;
         }
 
         //Push any operator into the stack if the previous operator is left bracket
-        if("(".equals(opStack.peek())){
+        if("(".charAt(0) == (opStack.peek()).getSymbol()){
             opStack.push(operator);
             return;
         }
@@ -112,8 +132,15 @@ public class InfixPostfixConverter {
             opStack.push(operator);
             return;
         }
+
+        System.out.println("opStack " + opStack);
     }
 
+    private boolean comparePriority(Operator op1,Operator op2){
+        return op1.getLevel() > op2.getLevel();
+    }
+
+    //Deprecated functions
     private boolean isNumber(String num){
         /**
          * Check the input string is a number
@@ -132,7 +159,4 @@ public class InfixPostfixConverter {
         return operator.matches("[\\+\\-\\*\\/\\(\\)]");
     }
 
-    private boolean comparePriority(String op1,String op2){
-        return getOperatorLevel(op1) > getOperatorLevel(op2);
-    }
 }

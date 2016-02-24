@@ -13,6 +13,10 @@ public class InputExpressionParser {
         return classify(tokenizer(rawExpression));
     }
 
+    public List<Element> parse(ArrayList<String> rawExpression){
+        return classify(rawExpression);
+    }
+
     private List<String> tokenizer(String rawExpression){
         /**
          * Split the raw string
@@ -43,9 +47,11 @@ public class InputExpressionParser {
         for(String I:splitExp){
             if(isNumber(I)){
                 infixExpression.add(new Number(I));
+                //System.out.println("add new Number  " + I);
             }
             else if(isOperator(I)){
                 infixExpression.add(new Operator(I));
+                //System.out.println("add new Operator " + I);
             }
         }
         return infixExpression;
