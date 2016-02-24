@@ -74,6 +74,7 @@ public class Operator extends Element {
     @Override
     public String toString() {
         return String.valueOf(symbol);
+    }
 
     public static boolean isOperator(char c){
         switch(c){
@@ -85,6 +86,5 @@ public class Operator extends Element {
             default:
                 return false;
         }
-
     }
 }

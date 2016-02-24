@@ -65,10 +65,10 @@ public class InfixPostfixConverter {
     private List<Element> infixToPostfix(List<Element> infixExpr){
 
         for(Element A : infixExpr){
-            if(isNumber(A))
+            if(A instanceof Number)
                 postfixExpression.add(A);
-            else if(isOperator(A))
-                opStack(A);
+            else if(A instanceof Operator)
+                opStack((Operator)A);
             else
                 System.out.println("undefined operator!");
         }
@@ -88,13 +88,13 @@ public class InfixPostfixConverter {
         }
 
         //Push operator into the stack if it is a left bracket
-        if("(".equals(operator)){
+        if("(".equals(operator.toString())){
             opStack.push(operator);
             return;
         }
 
         //Pop all elements in the stack to the output if meet the right bracket
-        if(")".equals(operator)){
+        if(")".equals(operator.toString())){
             String tmp = "";
             while(!"(".equals(tmp=opStack.pop())){
                 postfixExpression.add(tmp);
