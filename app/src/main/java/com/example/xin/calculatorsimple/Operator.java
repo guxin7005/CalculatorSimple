@@ -20,7 +20,6 @@ public class Operator extends Elements {
                 break;
             case '*':
             case '/':
-            case '%':
                 level = 1;
                 break;
             case '^':
@@ -71,8 +70,21 @@ public class Operator extends Elements {
         }
     }
 
+
     @Override
     public String toString() {
         return String.valueOf(symbol);
+
+    public static boolean isOperator(char c){
+        switch(c){
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                return true;
+            default:
+                return false;
+        }
+
     }
 }

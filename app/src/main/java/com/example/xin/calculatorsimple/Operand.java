@@ -15,4 +15,6 @@ public abstract class Operand extends Elements {
     public abstract Operand Operation(Operator op);
 
     public abstract String toString();
+
+    public abstract boolean isOperand();
 }
