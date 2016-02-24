@@ -10,25 +10,22 @@ import java.util.*;
  */
 public class InfixPostfixConverter {
 
-    private Stack<String> opStack = new Stack<String>();
-    private List<String> infixExpression = new ArrayList<String>();
-    private List<String> postfixExpression = new ArrayList<String>();
+    private Stack<Elements> opStack = new Stack<Elements>();
+    private List<Elements> infixExpression = new ArrayList<Elements>();
+    private List<Elements> postfixExpression = new ArrayList<Elements>();
 
-    public InfixPostfixConverter(String rawExpression){
-        setInfixExpression(rawExpression);
+    public InfixPostfixConverter(List<Elements> inputExpression){
+        setInfixExpression(inputExpression);
     }
 
     public InfixPostfixConverter(){
     }
 
-    public void setInfixExpression(String rawExpression){
-        StringTokenizer st = new StringTokenizer(rawExpression, "+-*/()", true);
-        while(st.hasMoreTokens()){
-            infixExpression.add(st.nextToken());
-        }
+    public void setInfixExpression(List<Elements> inputExpression){
+            infixExpression = inputExpression;
     }
 
-    public List<String> getPostfixExpression(){
+    public List<Elements> getPostfixExpression(){
         infixToPostfix();
         return postfixExpression;
     }
@@ -65,11 +62,11 @@ public class InfixPostfixConverter {
         return -1;
     }
 
-    private List<String> infixToPostfix(){
+    private List<Elements> infixToPostfix(){
         return infixToPostfix(infixExpression);
     }
 
-    private List<String> infixToPostfix(List<String> infixExpr){
+    private List<Elements> infixToPostfix(List<Elements> infixExpr){
 
         for(String A : infixExpr){
             if(isNumber(A))
@@ -87,7 +84,7 @@ public class InfixPostfixConverter {
         return postfixExpression;
     }
 
-    private void opStack(String operator){
+    private void opStack(Operator operator){
         //Push operator into the stack if it is empty
         if(opStack.empty()){
             opStack.push(operator);
