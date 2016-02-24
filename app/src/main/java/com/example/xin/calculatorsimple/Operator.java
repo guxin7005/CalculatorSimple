@@ -3,7 +3,7 @@ package com.example.xin.calculatorsimple;
 /**
  * Created by xiaoqian-niu on 2016-02-15.
  */
-public class Operator extends Elements {
+public class Operator extends Element {
     private int level;
     private char symbol;
     private boolean left_assoiative;

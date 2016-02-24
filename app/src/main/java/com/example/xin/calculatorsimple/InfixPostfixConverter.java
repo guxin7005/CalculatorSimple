@@ -10,32 +10,25 @@ import java.util.*;
  */
 public class InfixPostfixConverter {
 
-    private Stack<String> opStack = new Stack<String>();
-    private List<String> infixExpression = new ArrayList<String>();
-    private List<String> postfixExpression = new ArrayList<String>();
+    private Stack<Element> opStack = new Stack<Element>();
+    private List<Element> infixExpression = new ArrayList<Element>();
+    private List<Element> postfixExpression = new ArrayList<Element>();
 
-    public InfixPostfixConverter(String rawExpression){
-        setInfixExpression(rawExpression);
+    public InfixPostfixConverter(List<Element> inputExpression){
+        setInfixExpression(inputExpression);
     }
 
     public InfixPostfixConverter(){
     }
 
-    public void setInfixExpression(String rawExpression){
-        StringTokenizer st = new StringTokenizer(rawExpression, "+-*/()", true);
-        while(st.hasMoreTokens()){
-            infixExpression.add(st.nextToken());
-        }
+    public void setInfixExpression(List<Element> inputExpression){
+            infixExpression = inputExpression;
     }
 
-    public List<String> getPostfixExpression(){
+    public List<Element> getPostfixExpression(){
         infixToPostfix();
         return postfixExpression;
     }
-
-    private final int level1 = 0;//+-: level 0
-    private final int level2 = 1;//*/: level 1
-    private final int level3 = 3;//() level 3    /Maybe we do not define a level 3.
 
     private int getOperatorLevel(String operator){
         char oper = operator.charAt(0);
@@ -65,13 +58,13 @@ public class InfixPostfixConverter {
         return -1;
     }
 
-    private List<String> infixToPostfix(){
+    private List<Element> infixToPostfix(){
         return infixToPostfix(infixExpression);
     }
 
-    private List<String> infixToPostfix(List<String> infixExpr){
+    private List<Element> infixToPostfix(List<Element> infixExpr){
 
-        for(String A : infixExpr){
+        for(Element A : infixExpr){
             if(isNumber(A))
                 postfixExpression.add(A);
             else if(isOperator(A))
@@ -87,7 +80,7 @@ public class InfixPostfixConverter {
         return postfixExpression;
     }
 
-    private void opStack(String operator){
+    private void opStack(Operator operator){
         //Push operator into the stack if it is empty
         if(opStack.empty()){
             opStack.push(operator);

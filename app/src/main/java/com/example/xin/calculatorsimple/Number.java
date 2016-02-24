@@ -26,4 +26,6 @@ public class Number extends Operand {
     public String toString() {
         return String.valueOf(value);
     }
+
+
 }
