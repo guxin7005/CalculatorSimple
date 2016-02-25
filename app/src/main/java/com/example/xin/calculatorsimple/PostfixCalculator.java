@@ -1,4 +1,4 @@
-package ca.google.calculator;
+package com.example.xin.calculatorsimple;
 import java.util.*;
 
 /**
@@ -7,39 +7,47 @@ import java.util.*;
 public class PostfixCalculator {
 
     //private String postfixExpression;
-    private Stack<String> stack = new Stack<String>();
+    private Stack<Element> stack = new Stack<Element>();
 
-    public String evaluate(List<String> postfixExpression){
+    public String evaluate(List<Element> postfixExpression){
         /**
          * Evaluate postfix expression
          * @param List<String> postfixExpression
          * @return String result
          */
 
-        for(String I:postfixExpression){
-            if(isNumber(I)){
+        System.out.println("Input postfix exp:" + postfixExpression);
+
+        for(Element I:postfixExpression){
+            if(I instanceof Operand){
+                System.out.println("push Operand " + I + " into the stack");
                 stack.push(I);
             }
-            else if(isOperator(I)){
-                calculate(I);
+            else if(I instanceof Operator){
+                System.out.println("meet Operator " + I);
+                calculate((Operator)I);
             }
         }
-        return stack.pop();
+        return stack.pop().toString();
     }
 
-    private void calculate(String operator){
-        double d2 = Float.valueOf(stack.pop());
-        double d1 = Float.valueOf(stack.pop());
-        double res = 0;
+    private void calculate(Operator operator){
+        Operand d2 = (Operand)stack.pop();
+        Operand d1 = (Operand)stack.pop();
 
-        if("+".equals(operator)){res = plus(d1,d2);}
-        else if("-".equals(operator)){res = minus(d1,d2);}
-        else if("*".equals(operator)){res = multiply(d1,d2);}
-        else if("/".equals(operator)){res = divide(d1,d2);}
+        System.out.println("d1= " + d1);
+        System.out.println("d2= " + d2);
+        System.out.println("d1= " + d2);
 
-        stack.push(Double.toString(res));
+        Operand res = d1.Operation(d2, operator);
+
+        System.out.println("res= " + res);
+
+        stack.push(res);
     }
 
+
+    //Deprecated functions
     private boolean isNumber(String num){
         /**
          * Check the input string is a number
@@ -58,20 +66,5 @@ public class PostfixCalculator {
         return operator.matches("[\\+\\-\\*\\/]");
     }
 
-    private static double plus(double a, double b){
-        return a + b;
-    }
-
-    private static double minus(double a, double b){
-        return a - b;
-    }
-
-    private static double multiply(double a, double b){
-        return a * b;
-    }
-
-    private static double divide(double a, double b){
-        return a / b;
-    }
 
 }
