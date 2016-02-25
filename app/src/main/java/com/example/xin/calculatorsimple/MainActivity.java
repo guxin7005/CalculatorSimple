@@ -372,7 +372,9 @@ public class MainActivity extends AppCompatActivity {
         }
         return stack;*/
         
-	List<Element> test = new InputExpressionParser().parse(strInput);
+
+        System.out.println(strInput);
+        List<Element> test = new InputExpressionParser().parse(strInput);
 
         System.out.println(test);
 
