@@ -76,6 +76,7 @@ public class Operator {
             case '-':
             case '*':
             case '/':
+            case '^':
                 return true;
             default:
                 return false;
