@@ -110,6 +110,7 @@ public class Operator extends Element {
             case '-':
             case '*':
             case '/':
+            case '^':
                 return true;
             default:
                 return false;
