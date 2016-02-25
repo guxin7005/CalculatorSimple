@@ -471,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String calculate(ArrayList<String> strInput){
 
-
+        System.out.println(strInput);
         List<Element> test = new InputExpressionParser().parse(strInput);
 
         System.out.println(test);
