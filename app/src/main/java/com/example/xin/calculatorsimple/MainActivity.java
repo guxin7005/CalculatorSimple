@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -332,6 +332,18 @@ public class MainActivity extends AppCompatActivity {
                 currentItem += "0";
             }
 
+            /*if the last digit of strInput is a digit */
+            if(!strInput.isEmpty() &&
+                    Character.isDigit(strInput.charAt(strInput.length()-1))){
+                strInput+=currentItem;  //Expression concat the currentItem directly
+                inputItems.add(removeFromItems()+currentItem);    //update the ArrayList need pop and push
+                strInput+="=";
+                inputItems.add("=");
+                resetCurrentItem();
+                updateExpression();
+                return;
+            }
+
             inputItems.add(currentItem);
 
             /*The following statements is for expression */
@@ -354,10 +366,34 @@ public class MainActivity extends AppCompatActivity {
 
 
     public String calculate(ArrayList<String> strInput){
-        String stack="";
+        /*String stack="";
         for(int i = 0; i<strInput.size(); i++){
             stack += strInput.get(i) + "|";
         }
-        return stack;
+        return stack;*/
+        
+
+        System.out.println(strInput);
+        List<Element> test = new InputExpressionParser().parse(strInput);
+
+        System.out.println(test);
+
+        InfixPostfixConverter ipc = new InfixPostfixConverter(test);
+
+        PostfixCalculator calculator = new PostfixCalculator();
+
+        System.out.println("compute 4");
+        //System.out.println(ipc.getPostfixExpression());
+
+        List<Element> test2 = ipc.getPostfixExpression();
+
+        System.out.println(test2);
+
+        String res = calculator.evaluate(test2);
+
+        System.out.println(res);
+        System.out.println("compute 5");
+
+        return res;
     }
 }
