@@ -3,16 +3,19 @@ package com.example.xin.calculatorsimple;
 /**
  * Created by xiaoqian-niu on 2016-02-15.
  */
-public class Operator {
+public class Operator extends Element {
     private int level;
     private char symbol;
     private boolean left_assoiative;
-    private boolean isOperator;
+
 
     public Operator(char c){
         symbol = c;
-        isOperator = true;
+
+        super.isOperator = true;
+
         left_assoiative = true;
+
         switch(c){
             case '+':
             case '-':
@@ -20,6 +23,7 @@ public class Operator {
                 break;
             case '*':
             case '/':
+            case '%':
                 level = 1;
                 break;
             case '^':
@@ -32,6 +36,30 @@ public class Operator {
     }
 
     public Operator(String str){
+        symbol = str.charAt(0);
+        char c = symbol;
+
+        super.isOperator = true;
+
+        left_assoiative = true;
+
+        switch(c){
+            case '+':
+            case '-':
+                level = 0;
+                break;
+            case '*':
+            case '/':
+            case '%':
+                level = 1;
+                break;
+            case '^':
+                level = 2;
+                left_assoiative = false;
+                break;
+            default:
+                isOperator = false;
+        }
 
     }
 
@@ -68,6 +96,12 @@ public class Operator {
                 /* level == -1 means the Operator is invalid */
                 return -1;
         }
+    }
+
+
+    @Override
+    public String toString() {
+        return String.valueOf(symbol);
     }
 
     public static boolean isOperator(char c){
