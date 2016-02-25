@@ -332,6 +332,18 @@ public class MainActivity extends AppCompatActivity {
                 currentItem += "0";
             }
 
+            /*if the last digit of strInput is a digit */
+            if(!strInput.isEmpty() &&
+                    Character.isDigit(strInput.charAt(strInput.length()-1))){
+                strInput+=currentItem;  //Expression concat the currentItem directly
+                inputItems.add(removeFromItems()+currentItem);    //update the ArrayList need pop and push
+                strInput+="=";
+                inputItems.add("=");
+                resetCurrentItem();
+                updateExpression();
+                return;
+            }
+
             inputItems.add(currentItem);
 
             /*The following statements is for expression */
