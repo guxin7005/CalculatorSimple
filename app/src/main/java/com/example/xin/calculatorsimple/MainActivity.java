@@ -9,9 +9,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     String strInput;
     TextView expressionTextView;
     TextView resultTextView;
+    Button btnClear;
     String currentItem;
     ArrayList<String> inputItems;
     boolean isItemUpdated;
@@ -33,9 +35,19 @@ public class MainActivity extends AppCompatActivity {
         /*Initialize the members*/
         strInput = "";
         currentItem = "0";
-        isItemUpdated = false;
         result="";
         inputItems=new ArrayList<String>();
+
+        btnClear = (Button)findViewById(R.id.btnClear);
+
+        btnClear.setOnLongClickListener(new Button.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                longClick();
+                return true;
+            }
+        });
 
 
         expressionTextView = (TextView) findViewById(R.id.expressionTextView);
@@ -47,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         resultTextView.setText(currentItem);
         isItemUpdated = false;
 
-        updateItem();
+        resultTextView.setText(currentItem);
+
     }
 
     @Override
@@ -78,12 +91,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateItem(){
-        resultTextView.setText(currentItem);
+        //resultTextView.setText(currentItem);
         isItemUpdated = true;
+
+        /*The following is only for test*/
+        String temp = currentItem + "       " + calculate(inputItems);
+        resultTextView.setText(temp);
+    }
+
+    public void longClick(){
+        /*clear current Item*/
+        isItemUpdated = false;
+        currentItem = "0";
+
+        /*clear input expression*/
+        inputItems.clear();
+        strInput = "";
+
+        resultTextView.setText(currentItem);
+        expressionTextView.setText(strInput);
     }
 
     //* remove the last character of the input */
     public void btnClearOnClick(View view) {
+
         if(isItemUpdated) {
             currentItem = currentItem.substring(0, currentItem.length() - 1);
             if(currentItem.isEmpty()) {
@@ -92,8 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
             resultTextView.setText(currentItem);
         }
-
-        else if(strInput.length()>0){
+        else if(!strInput.isEmpty()){
             char tail = strInput.charAt(strInput.length() - 1);
 
             if(Operator.isOperator(tail)){
@@ -120,7 +150,16 @@ public class MainActivity extends AppCompatActivity {
             }
             removeFromItems();
             updateExpression();
+            //for test
+            /*The following is only for test*/
+            String temp = currentItem + "       " + calculate(inputItems);
+            resultTextView.setText(temp);
+        }else{
+            return;
         }
+
+        /* This statement is for monitor the stack */
+        resultTextView.setText(currentItem + "     " + calculate(inputItems));
     }
 
     private void resetCurrentItem(){
@@ -177,8 +216,9 @@ public class MainActivity extends AppCompatActivity {
         else
             currentItem+=num;
 
-        resultTextView.setText(currentItem);
-        isItemUpdated=true;
+        //resultTextView.setText(currentItem);
+        //isItemUpdated=true;
+        updateItem();
     }
 
     public void btn1OnClick(View v) {
@@ -277,6 +317,10 @@ public class MainActivity extends AppCompatActivity {
 
         inputItems.add(symbol);
         updateExpression();
+        /*for test*/
+        /*The following is only for test*/
+        String temp = currentItem + "       " + calculate(inputItems);
+        resultTextView.setText(temp);
     }
 
     public void btnPlusOnClick(View v) {
@@ -319,9 +363,15 @@ public class MainActivity extends AppCompatActivity {
     public void btnCalcOnClick(View v){
         if(!isItemUpdated){
             if(strInput.isEmpty()) return;
-            strInput = strInput.substring(0, strInput.length() - 1);
-            removeFromItems();
-            strInput+="=";
+            if(strInput.matches(".*(\\+|-|\\*|/|\\^)$")){
+                strInput = strInput.substring(0, strInput.length() - 1);
+                removeFromItems();
+                strInput+="=";
+            }else if(strInput.endsWith("=")) {
+                return;
+            }else{
+                strInput+="=";
+            }
         }
         else {
             if(currentItem.equals("-0")) {
@@ -365,15 +415,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public String calculate(ArrayList<String> strInput){
-        /*String stack="";
-        for(int i = 0; i<strInput.size(); i++){
-            stack += strInput.get(i) + "|";
+    public String calculate(ArrayList<String> inputItems){
+        String stack="";
+        for(int i = 0; i<inputItems.size(); i++){
+            stack += inputItems.get(i) + "|";
         }
-        return stack;*/
+        return stack;
         
 
-        System.out.println(strInput);
+        /*System.out.println(strInput);
         List<Element> test = new InputExpressionParser().parse(strInput);
 
         System.out.println(test);
@@ -394,6 +444,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(res);
         System.out.println("compute 5");
 
-        return res;
+        return res;*/
     }
 }
