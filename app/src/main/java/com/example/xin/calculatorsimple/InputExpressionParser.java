@@ -64,7 +64,8 @@ public class InputExpressionParser {
          * @return true: is a number, false: is not a number
          */
         //return num.matches("\\d+");
-        return (num.matches("\\d*\\.\\d+") || num.matches("\\d+"));
+        //return (num.matches("(\\d*)\\.\\d+") || num.matches("\\d+"));
+        return (num.matches("-?[0-9]*.?[0-9]+") || num.matches("-?[0-9]+"));
     }
 
     private boolean isOperator(String operator){

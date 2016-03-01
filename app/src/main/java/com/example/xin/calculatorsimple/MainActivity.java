@@ -1,8 +1,7 @@
 package com.example.xin.calculatorsimple;
 
 /* Author Xin Gu, Feb 4th, 2016 */
-/* Issue 00001 by Hongbo Niu, precent sign need to be modified for  */
-/* Issue 00001 by */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -16,6 +15,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/**/
+/*1.  Issue 00001: Hongbo Niu, Feb 28, 2016
+*     The key '%' does not work after calculation
+*
+*     1.1. assign result = "" when clear all the info for new calculation;
+*     1.2. add login in the function btnPercentOnClick();
+* */
+
+/*2. Issue 00005: Hongbo Niu, Feb 28, 2016
+*    The key '+/-' does not work
+*
+*    2.1 add login in the function btnToggleSignOnClick();
+*    2.2 modify the function processCurrentItem() to reset result;
+* */
+
+/*2.  Issue 00002: Guxin, Feb 28, 2016
+*     use result
+* */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -110,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         /*clear input expression*/
         inputItems.clear();
-        strInput = "";
+        strInput = "";                          /*Issue 00001*/
+        result = "";
 
         updateItem();
         expressionTextView.setText(strInput);
@@ -144,8 +163,9 @@ public class MainActivity extends AppCompatActivity {
                 strInput = strInput.substring(0, leftParenthesisIndex);
                 removeFromItems();
             } else if (tail == '=') {
-                strInput = "";
+                strInput = "";                      /*Issue 00001*/
                 inputItems.clear();
+                result="";
             } else {
                 Pattern pattern = Pattern.compile(".*(\\+|-|\\*|/|\\^)");
                 Matcher matcher = pattern.matcher(strInput);
@@ -153,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
                     strInput = strInput.substring(0, matcher.end());
                     removeFromItems();
                 } else {
-                    strInput = "";
+                    strInput = "";                  /*Issue 00001*/
                     inputItems.clear();
+                    result="";
                 }
             }
             updateExpression();
@@ -177,14 +198,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnToggleSignOnClick(View v) {
-        isItemUpdated = true;
-        if (currentItem.charAt(0) != '-') {
-            currentItem = '-' + currentItem;
-        } else {
-            currentItem = currentItem.substring(1, currentItem.length());
-        }
 
-        updateItem();
+        if(isItemUpdated || result.isEmpty()){          /*Issue 00005*/
+            isItemUpdated = true;
+            if (currentItem.charAt(0) != '-') {
+                currentItem = '-' + currentItem;
+            } else {
+                currentItem = currentItem.substring(1, currentItem.length());
+            }
+            updateItem();
+        /* Issue 00005 Start */
+        }else{
+            if(result.startsWith("-")){
+                result = result.substring(1, result.length());
+            }else{
+                result = "-" + result;
+            }
+            currentItem = result;
+            updateItem();
+        }
+        /* Issue 00005 End */
     }
 
     public void btnPointOnClick(View v) {
@@ -206,9 +239,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void btNumberOnClick(String num) {
         if (strInput.endsWith("=")) {
-            strInput = "";
+            strInput = "";                              /* Issue 00001 */
             expressionTextView.setText(strInput);
             inputItems.clear();
+            result="";
         }
 
         if (currentItem.equals("0"))
@@ -278,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
                     resetCurrentItem();
                     inputItems.clear();
                     inputItems.add(result);
+                    result = "";                  /*Issue 00005*/
                     break;
             }
             strInput += symbol;
@@ -354,7 +389,15 @@ public class MainActivity extends AppCompatActivity {
             currentItem = Double.toString(currentValue);
 
             updateItem();
+        /* Issue 00001 Start */
+        }else if(!result.isEmpty()){
+            double currentValue = Double.parseDouble(result) / 100.0;
+            currentItem = Double.toString(currentValue);
+            result = currentItem;
+            updateItem();
         }
+        /* Issue 00001 End*/
+
     }
 
     public void btnCalcOnClick(View v) {
