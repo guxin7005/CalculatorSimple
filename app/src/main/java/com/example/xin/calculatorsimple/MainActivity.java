@@ -2,7 +2,7 @@ package com.example.xin.calculatorsimple;
 
 /* Author Xin Gu, Feb 4th, 2016 */
 /* Issue 00001 by Hongbo Niu, precent sign need to be modified for  */
-
+/* Issue 00001 by */
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
