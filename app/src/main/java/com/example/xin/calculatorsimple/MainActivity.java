@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     strInput = "";                  /*Issue 00001*/
                     inputItems.clear();
                     result="";
-                    /***/
+                    /***kj;kjljyyiyi*/
                 }
             }
             updateExpression();
