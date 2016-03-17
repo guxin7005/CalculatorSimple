@@ -1,10 +1,18 @@
 package com.example.xin.calculatorsimple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by XL on 2016-02-22.
+ *
+ * March 16, 2016 Xin Gu/Hongbo Niu
+ * Issue 00006:   Modify function isNumber()
+ *                Check input is numerical;
+ *
  */
+
 public class InputExpressionParser {
 
 
@@ -65,7 +73,17 @@ public class InputExpressionParser {
          */
         //return num.matches("\\d+");
         //return (num.matches("(\\d*)\\.\\d+") || num.matches("\\d+"));
-        return (num.matches("-?[0-9]*.?[0-9]+") || num.matches("-?[0-9]+"));
+        //
+        /* Issue 00006 change Start */
+        try{
+            Double.parseDouble(num);
+        }catch (NumberFormatException e){
+            return false;
+        }
+
+        return true;
+        /* Issue 00006 change End */
+
     }
 
     private boolean isOperator(String operator){

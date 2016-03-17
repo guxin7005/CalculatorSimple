@@ -2,6 +2,11 @@ package com.example.xin.calculatorsimple;
 
 /**
  * Created by XL on 2016-02-22.
+ *
+ * March 16, 2016 Hongbo Niu/Xin lin
+ * Issue 00004:   Modify function toString()
+ *                Check if the result is integer before return;
+ *
  */
 public class Number extends Operand {
 
@@ -67,6 +72,11 @@ public class Number extends Operand {
 
     @Override
     public String toString() {
+        /* Issue 00004 change Start */
+        if(value==(int)value){
+            return String.valueOf((int)value);
+        }
+        /* Issue 00004 change End */
         return String.valueOf(value);
     }
 
