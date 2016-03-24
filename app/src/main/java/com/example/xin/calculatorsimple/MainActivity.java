@@ -2,13 +2,16 @@ package com.example.xin.calculatorsimple;
 
 /* Author Xin Gu, Feb 4th, 2016 */
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -82,7 +85,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        resultTextView.setOnLongClickListener(
+                new TextView.OnLongClickListener(){
+                    @Override
+                    public boolean onLongClick(View v) {
+                        ResultTextViewLongClick();
+                        return false;
+                    }
+                }
+        );
     }
+
+        private void ResultTextViewLongClick(){
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
+
+            pw.showAtLocation(this.findViewById(R.id.root), Gravity.CENTER, 0, 0);
+        }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -488,3 +510,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+ClipboardManager
