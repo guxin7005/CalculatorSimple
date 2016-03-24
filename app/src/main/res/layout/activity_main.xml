@@ -33,7 +33,7 @@
             android:autoText="true"
             android:background="#00FF00"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
