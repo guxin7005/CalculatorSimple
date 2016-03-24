@@ -34,10 +34,13 @@ import java.util.regex.Pattern;
 *    2.2 modify the function processCurrentItem() to reset result;
 * */
 
-/*2.  Issue 00002: Guxin, Feb 28, 2016
+/*3.  Issue 00002: Guxin, Feb 28, 2016
 *     use result
 * */
 
+/*4.  Issue 00008: Niuhongbo, Gu Xin, Lixinling, Mar 23, 2016
+*     Add pop up window in ResultTextView when longclick
+* */
 public class MainActivity extends AppCompatActivity {
 
     TextView expressionTextView;
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
             PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
 
-            pw.showAtLocation(this.findViewById(R.id.root), Gravity.CENTER, 0, 0);
+            pw.showAtLocation(this.findViewById(R.id.resultTextView), Gravity.START, 30, 50);
         }
 
 
@@ -510,4 +513,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-ClipboardManager
