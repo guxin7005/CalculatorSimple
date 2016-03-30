@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView expressionTextView;
     TextView resultTextView;
+    int x,y;
     Button btnClear;
 
     String currentItem;
@@ -97,15 +99,36 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 }
+
+
+        );
+
+        resultTextView.setOnTouchListener(
+                new TextView.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        final int action = event.getAction();
+                        switch (action & MotionEvent.ACTION_MASK){
+                            case MotionEvent.ACTION_DOWN:{
+                                x = (int) event.getX();
+                                y = (int) event.getY();
+                                break;
+                            }
+                        }
+
+                        return false;
+                    }
+                }
         );
     }
+
 
         private void ResultTextViewLongClick(){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
 
-            pw.showAtLocation(this.findViewById(R.id.resultTextView), Gravity.START, 30, 50);
+            pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,x, y);
         }
 
 
