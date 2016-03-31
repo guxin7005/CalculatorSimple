@@ -3,6 +3,7 @@ package com.example.xin.calculatorsimple;
 /* Author Xin Gu, Feb 4th, 2016 */
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onLongClick(View v) {
                         ResultTextViewLongClick();
-                        return false;
+                        return true;
                     }
                 }
 
@@ -112,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                             case MotionEvent.ACTION_DOWN:{
                                 x = (int) event.getX();
                                 y = (int) event.getY();
-                                break;
                             }
                         }
 
@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
             PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
 
-            pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,x, y);
+            pw.setBackgroundDrawable(new ShapeDrawable());
+            pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
+                    (int)resultTextView.getX()+x, (int)resultTextView.getY()+y);
         }
 
 
