@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
@@ -34,14 +35,18 @@ import java.util.regex.Pattern;
 *    2.2 modify the function processCurrentItem() to reset result;
 * */
 
-/*2.  Issue 00002: Guxin, Feb 28, 2016
+/*3.  Issue 00002: Guxin, Feb 28, 2016
 *     use result
 * */
 
+/*4.  Issue 00008: Niuhongbo, Gu Xin, Lixinling, Mar 23, 2016
+*     Add pop up window in ResultTextView when longclick
+* */
 public class MainActivity extends AppCompatActivity {
 
     TextView expressionTextView;
     TextView resultTextView;
+    int x,y;
     Button btnClear;
 
     String currentItem;
@@ -94,15 +99,36 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 }
+
+
+        );
+
+        resultTextView.setOnTouchListener(
+                new TextView.OnTouchListener(){
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        final int action = event.getAction();
+                        switch (action & MotionEvent.ACTION_MASK){
+                            case MotionEvent.ACTION_DOWN:{
+                                x = (int) event.getX();
+                                y = (int) event.getY();
+                                break;
+                            }
+                        }
+
+                        return false;
+                    }
+                }
         );
     }
+
 
         private void ResultTextViewLongClick(){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
 
-            pw.showAtLocation(this.findViewById(R.id.root), Gravity.CENTER, 0, 0);
+            pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,x, y);
         }
 
 
@@ -510,4 +536,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-ClipboardManager
