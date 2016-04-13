@@ -9,8 +9,9 @@
     android:layout_height="20dp"
     android:weightSum="1">
 
-    <TextView
+    <Button
         android:layout_width="80dip"
+        android:id="@+id/btnCopy"
         android:layout_height="20dip"
         android:layout_marginTop="10dip"
         android:textSize="15dp"
@@ -20,4 +21,15 @@
         android:textColor="#ffffff"
         android:layout_weight="0.85" />
 
+    <Button
+        android:layout_width="80dip"
+        android:id="@+id/btnPaste"
+        android:layout_height="20dip"
+        android:layout_marginTop="10dip"
+        android:textSize="15dp"
+        android:text="Paste"
+        android:background="#080808"
+        android:autoText="true"
+        android:textColor="#ffffff"
+        android:layout_weight="0.85" />
 </LinearLayout>
