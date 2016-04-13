@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     TextView resultTextView;
     int x,y;
     Button btnClear;
+    Button btnCopy;
+    Button btnPaste;
 
     String currentItem;
     String strInput;
@@ -82,6 +84,25 @@ public class MainActivity extends AppCompatActivity {
 
         resultTextView.setText(currentItem);
 
+        /*btnCopy = (Button) findViewById(R.id.btnCopy);
+        btnCopy.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
+
+            }
+        });
+
+        btnPaste = (Button) findViewById(R.id.btnPaste);
+        btnPaste.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                resultTextView.setText(item.getText());
+            }
+        });
+       */
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnLongClickListener(new Button.OnLongClickListener() {
 
@@ -130,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
             pw.setBackgroundDrawable(new ShapeDrawable());
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
-                    (int)resultTextView.getX()+x, (int)resultTextView.getY()+y);
+                    (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
         }
 
 
