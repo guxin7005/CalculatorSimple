@@ -2,7 +2,11 @@ package com.example.xin.calculatorsimple;
 
 /* Author Xin Gu, Feb 4th, 2016 */
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -84,24 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         resultTextView.setText(currentItem);
 
-        /*btnCopy = (Button) findViewById(R.id.btnCopy);
-        btnCopy.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
-
-            }
-        });
-
-        btnPaste = (Button) findViewById(R.id.btnPaste);
-        btnPaste.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                resultTextView.setText(item.getText());
-            }
-        });
+        /*
        */
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnLongClickListener(new Button.OnLongClickListener() {
@@ -145,13 +133,43 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void ResultTextViewLongClick(){
+
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.copy_popup, null, false),100,100, true);
+            View popupView = inflater.inflate(R.layout.copy_popup, null);
+
+            PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
 
             pw.setBackgroundDrawable(new ShapeDrawable());
+
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
+
+
+            btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
+            System.out.println("2");
+            btnCopy.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String resultText = resultTextView.getText().toString();
+                    System.out.println("1");
+                    ClipData clip = ClipData.newPlainText("simple text", resultText);
+                            //ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
+
+                }
+            });
+
+            System.out.println("3");
+            btnPaste = (Button) popupView.findViewById(R.id.btnPaste);
+            btnPaste.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                    resultTextView.setText(item.getText());
+                }
+            });
         }
 
 
