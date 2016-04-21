@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +49,15 @@ import java.util.regex.Pattern;
 /*4.  Issue 00008: Niuhongbo, Gu Xin, Lixinling, Mar 23, 2016
 *     Add pop up window in ResultTextView when longclick
 * */
+
+
 public class MainActivity extends AppCompatActivity {
 
     TextView expressionTextView;
     TextView resultTextView;
-    int x,y;
+
+    int x,y;    /* Issue 00008: store x,y coordinates of popup window */
+
     Button btnClear;
     Button btnCopy;
     Button btnPaste;
@@ -93,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
        */
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnLongClickListener(new Button.OnLongClickListener() {
-
             @Override
             public boolean onLongClick(View v) {
                 longClick();
@@ -101,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /* Issue 00008 Start */
         resultTextView.setOnLongClickListener(
                 new TextView.OnLongClickListener(){
                     @Override
@@ -109,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 }
-
 
         );
 
@@ -124,13 +129,11 @@ public class MainActivity extends AppCompatActivity {
                                 y = (int) event.getY();
                             }
                         }
-
                         return false;
                     }
                 }
         );
     }
-
 
         private void ResultTextViewLongClick(){
 
@@ -138,41 +141,49 @@ public class MainActivity extends AppCompatActivity {
 
             View popupView = inflater.inflate(R.layout.copy_popup, null);
 
-            PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
+            final PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
             pw.setBackgroundDrawable(new ShapeDrawable());
 
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
 
-
             btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
-            System.out.println("2");
+
             btnCopy.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String resultText = resultTextView.getText().toString();
-                    System.out.println("1");
                     ClipData clip = ClipData.newPlainText("simple text", resultText);
-                            //ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
-
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setPrimaryClip(clip);
+                    pw.dismiss();
                 }
             });
 
-            System.out.println("3");
             btnPaste = (Button) popupView.findViewById(R.id.btnPaste);
             btnPaste.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    resultTextView.setText(item.getText());
+                    System.out.println("1");
+                    ClipData cData = clipboard.getPrimaryClip();
+                    System.out.println(cData.getItemCount());
+
+                    if (cData.getItemCount() > 0){
+                        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                        currentItem = item.getText().toString();
+                        updateItem();
+                    } else {
+                        System.out.println("133");
+                        Toast.makeText(MainActivity.this, "Empty clipboard!!!!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    pw.dismiss();
                 }
             });
         }
-
-
+        /* Issue 00008 End */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
