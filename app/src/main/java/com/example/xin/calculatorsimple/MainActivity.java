@@ -166,16 +166,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    System.out.println("1");
-                    ClipData cData = clipboard.getPrimaryClip();
-                    System.out.println(cData.getItemCount());
 
-                    if (cData.getItemCount() > 0){
+                    if (clipboard.hasPrimaryClip()){
                         ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                         currentItem = item.getText().toString();
                         updateItem();
+                        isItemUpdated = true;
                     } else {
-                        System.out.println("133");
+
                         Toast.makeText(MainActivity.this, "Empty clipboard!!!!",
                                 Toast.LENGTH_LONG).show();
                     }
