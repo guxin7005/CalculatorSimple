@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             View popupView = inflater.inflate(R.layout.copy_popup, null);
 
-            PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
+           final PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
 
             pw.setBackgroundDrawable(new ShapeDrawable());
@@ -146,18 +146,21 @@ public class MainActivity extends AppCompatActivity {
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
 
-
+           final ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
             System.out.println("2");
             btnCopy.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String resultText = resultTextView.getText().toString();
-                    System.out.println("1");
+                    System.out.println(resultText);
                     ClipData clip = ClipData.newPlainText("simple text", resultText);
+                    clipboard.setPrimaryClip(clip);
                             //ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
+                    pw.dismiss();
 
                 }
+
             });
 
             System.out.println("3");
@@ -165,9 +168,10 @@ public class MainActivity extends AppCompatActivity {
             btnPaste.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
                     ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                     resultTextView.setText(item.getText());
+                    pw.dismiss();
                 }
             });
         }
