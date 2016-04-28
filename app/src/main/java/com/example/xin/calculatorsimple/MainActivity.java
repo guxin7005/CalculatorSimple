@@ -4,9 +4,8 @@ package com.example.xin.calculatorsimple;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ClipDescription;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -148,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
 
+            /** Onclick event listener for copy btn **/
             btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
-
             btnCopy.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -161,24 +160,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            /** Onclick event listener for paste btn **/
             btnPaste = (Button) popupView.findViewById(R.id.btnPaste);
             btnPaste.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
-                    if (clipboard.hasPrimaryClip()){
+                    if (!(clipboard.hasPrimaryClip())) {
+                        /* clipboard has not data */
+                        Toast.makeText(MainActivity.this, "ERROR: Empty clipboard",
+                                Toast.LENGTH_LONG).show();
+                    } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))) {
+                        /* data is not plain text */
+                        Toast.makeText(MainActivity.this, "ERROR: Invalid clipboard data type",
+                                Toast.LENGTH_LONG).show();
+                    } else {
                         ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
                         currentItem = item.getText().toString();
+
+                        if(strInput.contains("=")) {
+                            strInput="";
+                            inputItems.clear();
+                        }
                         updateItem();
                         isItemUpdated = true;
-                    } else {
-
-                        Toast.makeText(MainActivity.this, "Empty clipboard!!!!",
-                                Toast.LENGTH_LONG).show();
                     }
                     pw.dismiss();
                 }
+
             });
         }
         /* Issue 00008 End */
