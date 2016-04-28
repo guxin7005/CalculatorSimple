@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+/*1.  Issue 00011: Gu Xin, April 27, 2016
+*     Use Linear Layout instead of Grid Layout, to have full screen for different screen densities.
+      Change the background color
+      change button expressions of colors dimensions, reference to dimens.xml & colors.xml
+
+* */
+-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_gravity="fill"
-    android:columnCount="4"
-    android:orientation="horizontal"
-    android:rowCount="6">
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_column="0"
-        android:layout_row="0"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/expressionTextView"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_gravity="end"
-            android:background="#FFFFFF"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            
+            android:textSize="@dimen/display_font"
+            android:background="@color/express_back_color"
+            android:textColor="@color/express_color"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20dp" />
+            />
 
         <TextView
             android:id="@+id/resultTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:autoText="true"
-            android:background="#00FF00"
+            android:textSize="@dimen/display_font"
+            android:background="@color/result_back_color"
+            android:textColor="@color/result_color"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20sp" />
+            android:gravity="right"
+            android:layout_gravity="right" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_row="1"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:weightSum="4">
+        >
 
         <Button
             android:id="@+id/btnClear"
@@ -54,7 +67,11 @@
             android:layout_weight="1"
             android:onClick="btnClearOnClick"
             android:text="@string/clear_text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
 
         <Button
             android:id="@+id/btnToggleSign"
@@ -63,6 +80,9 @@
             android:layout_weight="1"
             android:onClick="btnToggleSignOnClick"
             android:text="@string/toggle_sign_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -72,6 +92,10 @@
             android:layout_weight="1"
             android:onClick="btnPercentOnClick"
             android:text="@string/percent_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
@@ -82,20 +106,21 @@
             android:layout_gravity="fill"
             android:layout_weight="1"
             android:onClick="btnDivideOnClick"
-            android:text="@string/devide_text"
+            android:text="@string/divide_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_row="2"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn7"
@@ -104,6 +129,10 @@
             android:layout_weight="1"
             android:onClick="btn7OnClick"
             android:text="@string/seven_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -113,6 +142,10 @@
             android:layout_weight="1"
             android:onClick="btn8OnClick"
             android:text="@string/eight_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -122,6 +155,10 @@
             android:layout_weight="1"
             android:onClick="btn9OnClick"
             android:text="@string/nine_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -131,18 +168,19 @@
             android:layout_weight="1"
             android:onClick="btnMultiplyOnClick"
             android:text="@string/multiply_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_row="3"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn4"
@@ -151,6 +189,9 @@
             android:layout_weight="1"
             android:onClick="btn4OnClick"
             android:text="@string/four_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -160,6 +201,9 @@
             android:layout_weight="1"
             android:onClick="btn5OnClick"
             android:text="@string/five_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -169,6 +213,9 @@
             android:layout_weight="1"
             android:onClick="btn6OnClick"
             android:text="@string/six_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -177,16 +224,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="btnSubtractOnClick"
-            android:text="@string/substract_text"
+            android:text="@string/subtract_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_row="4"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -198,6 +246,9 @@
             android:layout_weight="1"
             android:onClick="btn1OnClick"
             android:text="@string/one_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -207,6 +258,9 @@
             android:layout_weight="1"
             android:onClick="btn2OnClick"
             android:text="@string/two_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -216,6 +270,9 @@
             android:layout_weight="1"
             android:onClick="btn3OnClick"
             android:text="@string/three_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -225,14 +282,16 @@
             android:layout_weight="1"
             android:onClick="btnPlusOnClick"
             android:text="@string/plus_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_column="0"
-        android:layout_row="5"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
@@ -242,6 +301,9 @@
             android:layout_weight="1"
             android:onClick="btnPointOnClick"
             android:text="@string/point_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -251,6 +313,9 @@
             android:layout_weight="1"
             android:onClick="btn0OnClick"
             android:text="@string/zero_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -260,6 +325,9 @@
             android:layout_weight="1"
             android:onClick="btnExpoOnClick"
             android:text="@string/expo_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/number_color"
+            android:background="@color/number_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -269,8 +337,11 @@
             android:layout_weight="1"
             android:onClick="btnCalcOnClick"
             android:text="@string/equal_text"
+            android:textSize="@dimen/display_font"
+            android:textColor="@color/function_color"
+            android:background="@color/function_back_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
 
-</GridLayout>
+</LinearLayout>
