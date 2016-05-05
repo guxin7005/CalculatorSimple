@@ -4,9 +4,8 @@ package com.example.xin.calculatorsimple;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ClipDescription;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +48,15 @@ import java.util.regex.Pattern;
 /*4.  Issue 00008: Niuhongbo, Gu Xin, Lixinling, Mar 23, 2016
 *     Add pop up window in ResultTextView when longclick
 * */
+
+
 public class MainActivity extends AppCompatActivity {
 
     TextView expressionTextView;
     TextView resultTextView;
-    int x,y;
+
+    int x,y;    /* Issue 00008: store x,y coordinates of popup window */
+
     Button btnClear;
     Button btnCopy;
     Button btnPaste;
@@ -93,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
        */
         btnClear = (Button) findViewById(R.id.btnClear);
         btnClear.setOnLongClickListener(new Button.OnLongClickListener() {
-
             @Override
             public boolean onLongClick(View v) {
                 longClick();
@@ -101,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /* Issue 00008 Start */
         resultTextView.setOnLongClickListener(
                 new TextView.OnLongClickListener(){
                     @Override
@@ -109,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 }
-
 
         );
 
@@ -124,13 +128,11 @@ public class MainActivity extends AppCompatActivity {
                                 y = (int) event.getY();
                             }
                         }
-
                         return false;
                     }
                 }
         );
     }
-
 
         private void ResultTextViewLongClick(){
 
@@ -138,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
             View popupView = inflater.inflate(R.layout.copy_popup, null);
 
-           final PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+            final PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
 
             pw.setBackgroundDrawable(new ShapeDrawable());
@@ -146,37 +149,56 @@ public class MainActivity extends AppCompatActivity {
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
 
-           final ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+            /** Onclick event listener for copy btn **/
+
             btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
-            System.out.println("2");
             btnCopy.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String resultText = resultTextView.getText().toString();
-                    System.out.println(resultText);
-                    ClipData clip = ClipData.newPlainText("simple text", resultText);
-                    clipboard.setPrimaryClip(clip);
-                            //ClipData clip = ClipData.newPlainText("simple text", resultTextView.getText());
-                    pw.dismiss();
 
+                    ClipData clip = ClipData.newPlainText("simple text", resultText);
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setPrimaryClip(clip);
+                    pw.dismiss();
                 }
 
             });
 
-            System.out.println("3");
+            /** Onclick event listener for paste btn **/
             btnPaste = (Button) popupView.findViewById(R.id.btnPaste);
             btnPaste.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-                    resultTextView.setText(item.getText());
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+                    if (!(clipboard.hasPrimaryClip())) {
+                        /* clipboard has not data */
+                        Toast.makeText(MainActivity.this, "ERROR: Empty clipboard",
+                                Toast.LENGTH_LONG).show();
+                    } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))) {
+                        /* data is not plain text */
+                        Toast.makeText(MainActivity.this, "ERROR: Invalid clipboard data type",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                        currentItem = item.getText().toString();
+
+                        if(strInput.contains("=")) {
+                            strInput="";
+                            inputItems.clear();
+                        }
+                        updateItem();
+                        isItemUpdated = true;
+                    }
                     pw.dismiss();
                 }
+
             });
         }
-
-
+        /* Issue 00008 End */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
