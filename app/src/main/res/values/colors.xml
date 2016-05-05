@@ -5,10 +5,10 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="express_color">#ffffff</color>
-    <color name="result_color">#ffffff</color>
-    <color name="express_back_color">#000000</color>
-    <color name="result_back_color">#000000</color>
+    <color name="express_back_color">#ffffff</color>
+    <color name="result_back_color">#ffffff</color>
+    <color name="express_color">#000000</color>
+    <color name="result_color">#000000</color>
     <color name="function_color">#ffffff</color>
     <color name="function_back_color">#000000</color>
     <color name="number_color">#ffffff</color>
