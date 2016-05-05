@@ -140,24 +140,30 @@ public class MainActivity extends AppCompatActivity {
 
             View popupView = inflater.inflate(R.layout.copy_popup, null);
 
+
             final PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
 
             pw.setBackgroundDrawable(new ShapeDrawable());
 
             pw.showAtLocation(resultTextView, Gravity.NO_GRAVITY,
                     (int) resultTextView.getX() + x, (int) resultTextView.getY() + y);
 
+
             /** Onclick event listener for copy btn **/
+
             btnCopy = (Button) popupView.findViewById(R.id.btnCopy);
             btnCopy.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String resultText = resultTextView.getText().toString();
+
                     ClipData clip = ClipData.newPlainText("simple text", resultText);
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     clipboard.setPrimaryClip(clip);
                     pw.dismiss();
                 }
+
             });
 
             /** Onclick event listener for paste btn **/
@@ -165,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
             btnPaste.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
                     if (!(clipboard.hasPrimaryClip())) {
