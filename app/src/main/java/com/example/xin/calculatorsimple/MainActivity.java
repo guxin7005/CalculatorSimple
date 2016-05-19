@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -602,4 +604,18 @@ public class MainActivity extends AppCompatActivity {
             return res;
         }
     }
+
+
+    /** Called when the user clicks the Unit button */
+    public void Unit(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Unit.class);
+
+        startActivity(intent);
+
+    }
+
+
+
+
 }
