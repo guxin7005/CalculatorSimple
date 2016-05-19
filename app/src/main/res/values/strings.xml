@@ -22,6 +22,30 @@
     <string name="eight_text">8</string>
     <string name="nine_text">9</string>
 
+
+    <string name="button_area">Area</string>
+    <string name="button_length">Length</string>
+    <string name="button_volume">Volume</string>
+    <string name="button_weight">Weight</string>
+    <string name="button_temperature">Temperature</string>
+
+    <string name="unit_prompt">Choose a unit</string>
+    <string-array name="unit_array">
+        <item>Metres</item>
+        <item>Millimetres</item>
+        <item>Centermetres</item>
+        <item>Kilometres</item>
+        <item>Inches</item>
+        <item>Feet</item>
+        <item>Yards</item>
+        <item>Miles</item>
+    </string-array>
+
+
+
+
+
+
     <string name="button_basic">BASIC</string>
     <string name="button_unit">UNIT</string>
     <string name="button_sci">SCI</string>

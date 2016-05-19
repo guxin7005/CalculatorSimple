@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         expressionTextView = (TextView) findViewById(R.id.expressionTextView);
         expressionTextView.setGravity(Gravity.CENTER_VERTICAL);
-        expressionTextView.setHint("The input expression will show here.");
+        /*expressionTextView.setHint("The input expression will show here.");*/
 
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         resultTextView.setGravity(Gravity.CENTER_VERTICAL);
