@@ -1,14 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-/*1.  Issue 00011: Gu Xin, April 27, 2016
-*     Use Linear Layout instead of Grid Layout, to have full screen for different screen densities.
-      Change the background color
-      change button expressions of colors dimensions, reference to dimens.xml & colors.xml
-
-* */
--->
-
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
@@ -18,30 +7,29 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout0"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical"
+        android:layout_weight="1"
+        android:orientation="horizontal"
         >
 
         <TextView
-            android:id="@+id/expressionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/UnitInputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
 
             android:textSize="@dimen/display_font"
             android:background="@color/express_back_color"
             android:textColor="@color/express_color"
             android:textAppearance="?android:attr/textAppearanceLarge"
-
             />
 
         <TextView
-            android:id="@+id/resultTextView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/UnitOutputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:autoText="true"
             android:textSize="@dimen/display_font"
@@ -50,6 +38,36 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="right"
             android:layout_gravity="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:entries="@array/unit_array"
+            android:prompt="@string/unit_prompt"
+            />
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:entries="@array/unit_array"
+            android:prompt="@string/unit_prompt"
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -62,57 +80,33 @@
         >
 
         <Button
-            android:id="@+id/btnClear"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnClearOnClick"
-            android:text="@string/clear_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+            android:layout_height="wrap_content"
+            android:text="@string/button_length"
+            android:onClick="Length"
+            android:layout_weight="1" />
 
         <Button
-            android:id="@+id/btnToggleSign"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnToggleSignOnClick"
-            android:text="@string/toggle_sign_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_height="wrap_content"
+            android:text="@string/button_area"
+            android:onClick="Area"
+            android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/btnPercent"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnPercentOnClick"
-            android:text="@string/percent_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+            android:layout_height="wrap_content"
+            android:text="@string/button_volume"
+            android:onClick="Volume"
+            android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/btnDivide"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="fill"
-            android:layout_weight="1"
-            android:onClick="btnDivideOnClick"
-            android:text="@string/divide_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
+            android:layout_height="wrap_content"
+            android:text="@string/button_weight"
+            android:onClick="Weight"
+            android:layout_weight="1" />
 
-            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -162,18 +156,6 @@
 
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/btnMulitply"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnMultiplyOnClick"
-            android:text="@string/multiply_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-
-            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -219,17 +201,6 @@
             android:background="@drawable/botton"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/btnSubtract"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnSubtractOnClick"
-            android:text="@string/subtract_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -276,17 +247,6 @@
             android:background="@drawable/botton"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/btnPlus"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnPlusOnClick"
-            android:text="@string/plus_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/function_color"
-            android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -320,30 +280,20 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
-            android:id="@+id/btnExpo"
+            android:id="@+id/btnClear"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="btnExpoOnClick"
-            android:text="@string/expo_text"
-            android:textSize="@dimen/display_font"
-            android:textColor="@color/number_color"
-            android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <Button
-            android:id="@+id/btnCalc"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="btnCalcOnClick"
-            android:text="@string/equal_text"
+            android:onClick="btnClearOnClick"
+            android:text="@string/clear_text"
             android:textSize="@dimen/display_font"
             android:textColor="@color/function_color"
             android:background="@drawable/botton"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
 
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
